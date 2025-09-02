@@ -1,6 +1,6 @@
 'use client'
 
-import { RegisterForm } from '@/features/user'
+import { RegisterForm } from '@/features/auth'
 
 const RegisterPage = () => {
   return <RegisterForm />

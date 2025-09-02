@@ -6,3 +6,9 @@ export const registerUser = async (userData: User) => {
 
   return data
 }
+
+export const loginUser = async (email: string, password: string) => {
+  const { data } = await post('/login', { email, password })
+
+  return data
+}

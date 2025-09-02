@@ -1,10 +1,13 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Form, FormControl, FormField, FormItem, FormMessage, Input } from '@/components/ui'
-import { registerUser } from '@/features/user/slice'
+import { registerUser } from '@/features/auth/slice'
 import { useAppDispatch, useAppSelector } from '@/lib'
-import { RegisterAlert } from '@/features/user'
+import { FormTitle, RegisterAlert } from '@/features/auth'
 
 const RegisterSchema = yup.object().shape({
   fullName: yup
@@ -22,6 +25,8 @@ const RegisterSchema = yup.object().shape({
 type RegisterFormData = yup.InferType<typeof RegisterSchema>
 
 export const RegisterForm = () => {
+  const router = useRouter()
+
   const dispatch = useAppDispatch()
   const { loading, message } = useAppSelector((state) => state.user)
 
@@ -59,9 +64,9 @@ export const RegisterForm = () => {
   return (
     <>
       {message && <RegisterAlert type="success" message={message} />}
-      <div className="relative min-h-screen w-full flex items-center justify-center">
+      <div className="relative min-h-screen w-full flex flex-col gap-2 items-center justify-center">
         <div className="w-87.5 flex flex-col text-center border border-neutral-300 p-8">
-          <h1 className="instagram-heading mt-9 mb-3">Instagram</h1>
+          <FormTitle />
           <p className="font-semibold text-neutral-500 mb-3">
             Sign up to see photos and videos from your friends.
           </p>
@@ -132,6 +137,18 @@ export const RegisterForm = () => {
               </Button>
             </form>
           </Form>
+        </div>
+        <div className="w-87.5 flex flex-col items-center border border-neutral-300 px-8 py-4">
+          <p className="text-center">Have an account?</p>
+          <Button
+            variant="link"
+            className="h-4 w-14 text-indigo-500 font-bold text-md p-0 cursor-pointer hover:no-underline"
+            onClick={() => {
+              router.push('/login')
+            }}
+          >
+            Log in
+          </Button>
         </div>
       </div>
     </>
