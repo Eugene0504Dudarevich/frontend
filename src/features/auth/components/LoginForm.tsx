@@ -40,18 +40,12 @@ export const LoginForm = () => {
       await dispatch(loginUser(formValues)).unwrap()
     } catch (error) {
       if (error && typeof error === 'object' && 'status' in error) {
-        const err = error as { status: number; message: string; field: string }
-
-        if (err.status === 400) {
-          if (err.field === 'email') {
-            form.setError('email', { type: 'server', message: err.message })
-          }
-          if (err.field === 'password') {
-            form.setError('password', { type: 'server', message: err.message })
-          }
+        const err = error as { status: number; message: string }
+        if (err.status === 401) {
+          form.setError('root', { type: 'server', message: err.message })
         }
       } else {
-        console.error('Registration failed:', error)
+        console.error('Login failed:', error)
       }
     }
   }
@@ -90,6 +84,9 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
+            {errors.root?.message && (
+              <FormMessage className="text-left">{errors.root.message}</FormMessage>
+            )}
             <Button
               disabled={((isDirty || isSubmitted) && !isValid) || isSubmitting}
               type="submit"

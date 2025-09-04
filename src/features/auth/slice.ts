@@ -47,11 +47,10 @@ export const loginUser = createAsyncThunk<
     if (axios.isAxiosError(error)) {
       return rejectWithValue({
         status: error.response?.status || 500,
-        field: (error.response?.data as { field: string; message: string })?.field,
         message:
-          (error.response?.data as { field: string; message: string })?.message ||
+          (error.response?.data as { message: string })?.message ||
           error.message ||
-          'Failed to register'
+          'Failed to login'
       })
     }
 
