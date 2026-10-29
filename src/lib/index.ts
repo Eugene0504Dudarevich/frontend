@@ -1,4 +1,4 @@
-export * from './axios'
+export * from './api'
 export * from './store/Providers'
 export * from './store'
 export * from './store/hooks'

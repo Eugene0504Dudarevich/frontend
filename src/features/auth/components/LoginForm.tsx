@@ -38,6 +38,7 @@ export const LoginForm = () => {
   const onSubmit = async (formValues: LoginFormData) => {
     try {
       await dispatch(loginUser(formValues)).unwrap()
+      router.push('/')
     } catch (error) {
       if (error && typeof error === 'object' && 'status' in error) {
         const err = error as { status: number; message: string }
